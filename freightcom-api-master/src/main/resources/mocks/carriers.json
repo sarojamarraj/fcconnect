@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "name": "Fedex"
+    },
+    {
+        "id": 2,
+        "name": "DHL"
+    },
+    {
+        "id": 3,
+        "name": "UPS"
+    },
+    {
+        "id": 4,
+        "name": "Canada Post"
+    },
+    {
+        "id": 5,
+        "name": "Purolator"
+    },
+    {
+        "id": 6,
+        "name": "US Postal Service"
+    },
+    {
+        "id": 7,
+        "name": "TNT Express"
+    }
+]

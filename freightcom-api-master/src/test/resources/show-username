@@ -1,0 +1,17 @@
+#!/bin/bash
+
+HOST="$2"
+x=`mktemp`
+login=${1}
+
+trap "echo -e '\\n\\nEXITING\\n'; rm -f ${x}" EXIT
+trap "echo UNEXPECTED ERROR; rm ${x}; exit " ERR
+
+sess='show-user'
+
+http --check-status --session=$sess -f POST $HOST:8080/api/login username=admin password="${FREIGHTCOM_admin}"
+echo SSSS $?
+
+http --check-status -pb --session=$sess http://${HOST}:8080/api/user/search/findByLogin "name==${login}" > $x
+
+cat $x

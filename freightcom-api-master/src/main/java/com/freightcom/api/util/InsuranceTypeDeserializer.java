@@ -1,0 +1,25 @@
+package com.freightcom.api.util;
+
+import java.io.IOException;
+
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.ObjectCodec;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonDeserializer;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.freightcom.api.model.InsuranceType;
+
+public class InsuranceTypeDeserializer extends JsonDeserializer<InsuranceType>
+{
+
+    @Override
+    public InsuranceType deserialize(JsonParser parser, DeserializationContext context)
+            throws IOException, JsonProcessingException {
+        ObjectCodec codec = parser.getCodec();
+        JsonNode node = codec.readTree(parser);
+
+        return InsuranceType.getType(node.asText());
+    }
+
+}

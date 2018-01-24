@@ -1,0 +1,23 @@
+#!/bin/bash
+
+HOST=$1
+mock=${2:-mock1}
+
+echo RUNNING
+echo $HOST $mock
+
+x=`mktemp`
+
+trap "echo -e '\\n\\nEXITING\\n'; rm -f ${x}" EXIT
+trap "echo UNEXPECTED ERROR; rm ${x}; exit " ERR
+
+sess='mock1'
+
+http --check-status --session=$sess -f POST $HOST:8080/api/login username=admin password="${FREIGHTCOM_admin}"
+
+
+
+http --check-status -pb --session=$sess "http://${HOST}:8080/api/${mock}"
+
+
+

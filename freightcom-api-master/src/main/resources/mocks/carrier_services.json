@@ -1,0 +1,30 @@
+[
+    {
+        "id": 1,
+        "carrier_name": "Fedex",
+        "service": "Fedex Freight",
+        "logo": "\/\/192.237.249.155:3004/static/fedexfreight.png",
+        "transit_days": "4 days",
+        "total_charges": "344.34",
+        "charges": {
+            "base_fee": "126.03",
+            "fuel_fee": "29.00",
+            "insurance": "120.00",
+            "crossBorderFee": "104.00"
+        }
+    },
+    {
+        "id": 2,
+        "carrier_name": "DHL",
+        "service": "DHL Freight",
+        "logo": "\/\/192.237.249.155:3004/static/dhl.png",
+        "transit_days": "3 days",
+        "total_charges": "357.04",
+        "charges": {
+            "base_fee": "116.03",
+            "fuel_fee": "25.00",
+            "insurance": "125.00",
+            "crossBorderFee": "104.00"
+        }
+    }
+]

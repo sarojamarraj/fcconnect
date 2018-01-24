@@ -1,0 +1,22 @@
+#!/bin/bash
+
+HOST=$1
+route=${2:-/api}
+
+shift
+shift
+
+echo RUNNING
+echo $HOST $route
+
+x=`mktemp`
+
+trap "echo -e '\\n\\nEXITING\\n'; rm -f ${x}" EXIT
+trap "echo UNEXPECTED ERROR; rm ${x}; exit " ERR
+
+
+
+http --check-status -pbh  --json -f POST "http://${HOST}:8080${route}" $@
+
+
+

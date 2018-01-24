@@ -1,0 +1,48 @@
+{
+  "id": "${order-id}",
+  "scheduledPickup": {
+    "pickupDate": "2017-07-26",
+    "pickupReadyTime": "09:00",
+    "pickupCloseTime": "17:00",
+    "deliveryCloseTime": "17:00"
+  },
+  "customsInvoice": {
+    "billTo": {
+      "company": "company",
+      "address1": "add1",
+      "address2": "add2",
+      "postalCode": "m6a1g1",
+      "city": "Toronto",
+      "province": "ON",
+      "country": "CA"
+    },
+    "dutiable": true,
+    "bill": "consignee",
+    "consigneeAccount": "2234234",
+    "sedNumber": "234234",
+    "products": [
+      {
+        "desc": "desc",
+        "hscode": "hscode..",
+        "origin": "CA",
+        "quantity": "2",
+        "unitPrice": "1"
+      },
+      {
+        "desc": "desc2",
+        "hscode": "234",
+        "origin": "AX",
+        "quantity": "3",
+        "unitPrice": "3"
+      }
+    ],
+    "contactInfo": {
+      "company": "companycontact",
+      "name": "namecontact",
+      "brokerName": "broker",
+      "taxId": "taxid",
+      "phone": "23423",
+      "receiptsTaxId": "asdfsdf"
+    }
+  }
+}

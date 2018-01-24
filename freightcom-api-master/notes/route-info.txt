@@ -1,0 +1,890 @@
+GET,/order
+<ul>
+<li>id: equal match</li>
+<li>bolNumber: substring match</li>
+<li>bolId: substring match</li>
+<li>trackingNumber: equal match</li>
+<li>referenceCode: substring match</li>
+<li>carrierName: substring match on carrier name</li>
+<li>serviceName: substring match on service name</li>
+<li>scheduledShipDate: custom, today, tomorrow, upcoming, past; format yyyy-mm-dd</li>
+<li>origin: substring match on city, postal code, or company name</li>
+<li>eshipperOid</li>
+<li>destination: substring match on city, postal code or company name</li>
+<li>shipFrom: same as origin</li>
+<li>shipTo: same as destination</li>
+<li>scheduledShipDateFrom: matches >= yyyy-mm-dd</li>
+<li>scheduledShipDateTo: matches <= yyyy-mm-dd</li>
+<li>deliveryDate: exact match on delivery date</li>
+<li>orderStatusName: substring match on status name</li>
+<li>packageTypeId: exact match on package type id</li>
+<li>statusId: exact match on status id</li>
+<li>invoiceStatus: one of "unbilled charges" or "fully invoiced"
+</ul>
+
+GET,/submitted-orders
+Same parameters as /order but orders with draft status excluded.
+
+GET,/draft-orders
+Same parameters as /order excluding statusId. Oonly orders matching other parameters and having draft status are shown.
+
+
+POST,/user/resetPassword/{id}
+Generate a new password and send email to the user identified by id. Return [ “ok” ] or [“failed” ]
+
+POST,/user/resetPasswordByEmail
+Generate a new password and send email to the user identified by the email address in the email field of the JSON body. Return [ “ok” ] or [“failed” ]
+
+GET,/logged-in-user
+Return user record for the currently logged in user.
+
+GET,/customer-staff
+Paged search.
+<br>
+Parameters are not case sensitive and optional
+<ul>
+<li>customer_id: required unless session role is customer in which case it must be equal to and defaults to the session customer id</li>
+<li>customerid: required unless session role is customer in which case it must be equal to and defaults to the session customer id</li>
+<li>customer_staff_id: </li>
+<li>customerstaffid: </li>
+<li>customer_admin_id: </li>
+<li>customeradminid: </li>
+<li>name: substring on firstname, lastname</li>
+<li>namefields: substring on firstname, lastname, email, login</li>
+<li>firstname: substring</li>
+<li>lastname: substring</li>
+<li>login: substring</li>
+<li>role: </li>
+<li>parentsalesagentid: </li>
+<li>enabled: true, false</li>
+<li>phone: substring</li>
+<li>email: substring</li>
+</ul>
+
+GET,/customer-staff/{id}
+Return the user if logged in as admin or same customer
+
+
+
+PUT,/user/update/{id}
+Update a user
+
+POST,/user
+Create a user
+
+POST,/user/admin
+Create a user with the ADMIN role
+
+POST,/user/agent
+Create a user with the AGENT role
+
+POST,/user/freightcom_staff
+Create a user with the FREIGHTCOM_STAFF role
+
+POST,/user/customer_admin/{customerId}
+Create a user with the CUSTOMER_ADMIN role for the identified customer
+
+POST,/user/customer_staff/{customerId}
+Create a user with the CUSTOMER_STAFF role for the identified customer
+
+GET,/user/{id:\d+}
+Return the user with the id if admin or customer admin for that user
+
+DELETE,/user/role/{id:\d+}
+Remove the role with the given id (effectively removes the role from a user)
+
+POST,/user/role/admin
+JSON body contains role specific fields, i.e. user_id. Add the role to the user by creating the role record.
+
+POST,/user/role/agent
+JSON body contains role specific fields, i.e. user_id. Add the role to the user by creating the role record.
+
+
+POST,/user/role/freightcom_staff
+JSON body contains role specific fields, i.e. user_id. Add the role to the user by creating the role record.
+
+
+POST,/user/role/customer_admin
+JSON body contains role specific fields, i.e. user_id optionally customer_id. Add the role to the user by creating the role record.
+
+
+POST,/user/role/customer_staff
+JSON body contains role specific fields, i.e. user_id and customer_id. Add the role to the user by creating the role record.
+
+
+POST,/set-session-role/{id}
+Instruct the API which role is selected for the user
+
+GET,/session-role
+Return information about the current session role set in the backend
+
+
+GET,/accessorial_services/{type}
+<ul>
+</ul>
+
+GET,/accessorial_services
+<ul>
+</ul>
+
+GET,/accessorial_servicesx
+<ul>
+</ul>
+
+GET,/accessorial_servicesy
+<ul>
+</ul>
+
+DELETE,/address_book/{id:\d+}
+<ul>
+</ul>
+
+PUT,/address_book/{id:\d+}
+<ul>
+</ul>
+
+GET,/address_book
+<ul>
+</ul>
+
+POST,/address_book
+<ul>
+</ul>
+
+GET,/addressbook
+<ul>
+</ul>
+
+DELETE,/alert/{id:\d+}
+<ul>
+</ul>
+
+GET,/alert/{id:\d+}
+<ul>
+</ul>
+
+PUT,/alert/{id:\d+}
+<ul>
+</ul>
+
+GET,/alert
+<ul>
+</ul>
+
+POST,/alert
+<ul>
+</ul>
+
+GET,/autoconfig || /autoconfig.json
+<ul>
+</ul>
+
+GET,/beans || /beans.json
+<ul>
+</ul>
+
+DELETE,/carrier/{id:\d+}
+<ul>
+</ul>
+
+GET,/carrier/{id:\d+}
+<ul>
+</ul>
+
+PUT,/carrier/{id:\d+}
+<ul>
+</ul>
+
+GET,/carrier
+<ul>
+</ul>
+
+POST,/carrier
+<ul>
+</ul>
+
+GET,/carrier_rates/more/{orderId:\d+}
+<ul>
+</ul>
+
+DELETE,/carrier_rates/{orderId:\d+}
+<ul>
+</ul>
+
+GET,/carrier_rates/{orderId:\d+}
+<ul>
+</ul>
+
+GET,/carrier_services
+<ul>
+</ul>
+
+GET,/configprops || /configprops.json
+<ul>
+</ul>
+
+PUT,/customer-staff/{id}
+<ul>
+</ul>
+
+POST,/customer-staff
+<ul>
+</ul>
+
+GET,/customer/search/findByNameContainingAllIgnoringCase
+<ul>
+</ul>
+
+DELETE,/customer/{id:\d+}
+<ul>
+</ul>
+
+GET,/customer/{id:\d+}
+<ul>
+</ul>
+
+PUT,/customer/{id:\d+}
+<ul>
+</ul>
+
+GET,/customer
+<ul>
+</ul>
+
+POST,/customer
+<ul>
+</ul>
+
+GET,/customerorder
+<ul>
+</ul>
+
+GET,/customers
+<ul>
+</ul>
+
+GET,/customersx
+<ul>
+</ul>
+
+GET,/dm/content/{id}
+<ul>
+</ul>
+
+GET,/dm/login
+<ul>
+</ul>
+
+GET,/dm/roots
+<ul>
+</ul>
+
+GET,/dump || /dump.json
+<ul>
+</ul>
+
+GET,/env || /env.json
+<ul>
+</ul>
+
+GET,/env/{name:.*}
+<ul>
+</ul>
+
+GET,/foo
+<ul>
+</ul>
+
+GET,/freight_class
+<ul>
+</ul>
+
+GET,/heapdump || /heapdump.json
+<ul>
+</ul>
+
+GET,/indices
+<ul>
+</ul>
+
+GET,/info || /info.json
+<ul>
+</ul>
+
+GET,/insurance_types
+<ul>
+</ul>
+
+GET,/loggedEvents/search/findByEntityIdAndEntityTypeAndMessageType
+<ul>
+</ul>
+
+GET,/logged_event || /loggedEvents
+<ul>
+</ul>
+
+DELETE,/logged_event/{id:\d+}
+<ul>
+</ul>
+
+PUT,/logged_event/{id:\d+}
+<ul>
+</ul>
+
+POST,/logged_event
+<ul>
+</ul>
+
+GET,/mappings || /mappings.json
+<ul>
+</ul>
+
+GET,/metrics || /metrics.json
+<ul>
+</ul>
+
+GET,/metrics/{name:.*}
+<ul>
+</ul>
+
+GET,/mock/{resource}
+<ul>
+</ul>
+
+GET,/mock1
+<ul>
+</ul>
+
+GET,/mock_address_book
+<ul>
+</ul>
+
+GET,/order-events/{orderId}
+<ul>
+</ul>
+
+POST,/order/book/{id:\d+}
+<ul>
+</ul>
+
+POST,/order/create
+<ul>
+</ul>
+
+PUT,/order/delete/{id:\d+}
+<ul>
+</ul>
+
+GET,/order/search/findByCustomerId
+<ul>
+</ul>
+
+POST,/order/select-rate/{orderId:\d+}/{rateId:\d+}
+<ul>
+</ul>
+
+PUT,/order/update/{id}
+<ul>
+</ul>
+
+POST,/order/upload-distribution-list
+<ul>
+</ul>
+
+DELETE,/order/{id:\d+}
+<ul>
+</ul>
+
+GET,/order/{id:\d+}
+<ul>
+</ul>
+
+PUT,/order/{id:\d+}
+<ul>
+</ul>
+
+POST,/order
+<ul>
+</ul>
+
+DELETE,/order_rate_quote/{id:\d+}
+<ul>
+</ul>
+
+GET,/order_rate_quote/{id:\d+}
+<ul>
+</ul>
+
+PUT,/order_rate_quote/{id:\d+}
+<ul>
+</ul>
+
+DELETE,/order_rate_quote
+<ul>
+</ul>
+
+GET,/order_rate_quote
+<ul>
+</ul>
+
+POST,/order_rate_quote
+<ul>
+</ul>
+
+GET,/order_status || /orderStatuses
+<ul>
+</ul>
+
+DELETE,/order_status/{id:\d+}
+<ul>
+</ul>
+
+GET,/order_status/{id:\d+}
+<ul>
+</ul>
+
+PUT,/order_status/{id:\d+}
+<ul>
+</ul>
+
+POST,/order_status
+<ul>
+</ul>
+
+GET,/orders-by-day
+Customers and agents see only their orders
+<ul>
+<li>from: yyyy-mm-dd (inclusive)</li>
+<li>to: yyyy-mm-dd (inclusive</li>
+<li>customerId</li>
+<li>agentId</li>
+</ul>
+
+GET,/orders-by-month
+Customers and agents see only their orders
+<ul>
+<li>from: yyyy-mm-dd (inclusive)</li>
+<li>to: yyyy-mm-dd (inclusive</li>
+<li>customerId</li>
+<li>agentId</li>
+</ul>
+
+GET,/orders-by-week
+Customers and agents see only their orders
+<ul>
+<li>from: yyyy-mm-dd (inclusive)</li>
+<li>to: yyyy-mm-dd (inclusive</li>
+<li>customerId</li>
+<li>agentId</li>
+</ul>
+
+GET,/ordersx
+<ul>
+</ul>
+
+GET,/package_templates
+<ul>
+</ul>
+
+GET,/pallet_templates
+<ul>
+</ul>
+
+GET,/product_book
+<ul>
+</ul>
+
+DELETE,/service/{id:\d+}
+<ul>
+</ul>
+
+GET,/service/{id:\d+}
+<ul>
+</ul>
+
+PUT,/service/{id:\d+}
+<ul>
+</ul>
+
+GET,/service
+<ul>
+</ul>
+
+POST,/service
+<ul>
+</ul>
+
+GET,/services
+<ul>
+</ul>
+
+GET,/session-role
+<ul>
+</ul>
+
+DELETE,/system_property/{id:\d+}
+<ul>
+</ul>
+
+GET,/system_property/{id:\d+}
+<ul>
+</ul>
+
+PUT,/system_property/{id:\d+}
+<ul>
+</ul>
+
+GET,/system_property/{name:[a-zA-Z].*}
+<ul>
+</ul>
+
+PUT,/system_property/{name:[a-zA-Z].*}
+<ul>
+</ul>
+
+GET,/system_property
+<ul>
+</ul>
+
+POST,/system_property
+<ul>
+</ul>
+
+GET,/trace || /trace.json
+<ul>
+</ul>
+
+GET,/user/role/{id:\d+}
+<ul>
+</ul>
+
+DELETE,/user/role/{userId}/{name:[a-zA-Z].+}
+<ul>
+</ul>
+
+GET,/user/search/findByLogin
+<ul>
+</ul>
+
+
+DELETE,/user/{id:\d+}
+<ul>
+</ul>
+
+PUT,/user/{id:\d+}
+<ul>
+</ul>
+
+GET,/user
+Parameters are not case sensitive
+<ul>
+<li>customer_id: </li>
+<li>customerid: </li>
+<li>customer_staff_id: </li>
+<li>customerstaffid: </li>
+<li>customer_admin_id: </li>
+<li>customeradminid: </li>
+<li>name: substring on firstname, lastname</li>
+<li>namefields: substring on firstname, lastname, email, login</li>
+<li>firstname: substring</li>
+<li>lastname: substring</li>
+<li>login: substring</li>
+<li>role: </li>
+<li>parentsalesagentid: </li>
+<li>enabled: true, false</li>
+<li>phone: substring</li>
+<li>email: substring</li>
+</ul>
+
+DELETE,/user_role/{id:\d+}
+<ul>
+</ul>
+
+GET,/user_role/{id:\d+}
+<ul>
+</ul>
+
+GET,/user_role
+<ul>
+</ul>
+
+
+DELETE,/credit/{id:\d+}
+<ul>
+</ul>
+
+GET,/credit/{id:\d+}
+<ul>
+</ul>
+
+PUT,/credit/{id:\d+}
+<ul>
+</ul>
+
+GET,/credit
+<ul>
+</ul>
+
+POST,/credit
+<ul>
+</ul>
+
+DELETE,/currency-exchange/{id:\d+}
+<ul>
+</ul>
+
+GET,/currency-exchange/{id:\d+}
+<ul>
+</ul>
+
+PUT,/currency-exchange/{id:\d+}
+<ul>
+</ul>
+
+GET,/currency-exchange
+<ul>
+</ul>
+
+POST,/currency-exchange
+<ul>
+</ul>
+
+POST,/generate-invoice
+<ul>
+</ul>
+
+POST,/invoice/view/{id:\d+}
+<ul>
+</ul>
+
+GET,/invoice/{id:\d+}
+<div>
+Search options are not case sensitive
+</div>
+<ul>
+<li>id: list of invoices with exactly this id</li>
+<li>paymentstatus: </li>
+<li>status: </li>
+<li>duedate: </li>
+<li>dueat: </li>
+<li>duedatefrom: </li>
+<li>dueatfrom: </li>
+<li>duedateto: </li>
+<li>dueatto: </li>
+<li>dategenerated: </li>
+<li>createdat: </li>
+<li>dategeneratedfrom: </li>
+<li>createdatfrom: </li>
+<li>dategeneratedto: </li>
+<li>createdatto: </li>
+<li>customerid: </li>
+<li>orderid: </li>
+<li>agentid: </li>
+<li>sort: </li>
+<li>size: </li>
+<li>packagetypename: </li>
+<li>page: </li>
+</ul>
+<div>_embedded.invoice</div>
+
+PUT,/invoice/{id:\d+}
+<ul>
+</ul>
+
+DELETE,/invoice
+<div>
+JSON body includes { invoices: [ id1, id2, id3 ... ]}
+Freightcom can delete those invoices identified.
+</div>
+
+GET,/invoice
+<ul>
+</ul>
+
+GET,/logged_event/{id:\d+} || /loggedEvents/{id:\d+}
+<ul>
+</ul>
+
+DELETE,/markup/{id:\d+}
+<ul>
+</ul>
+
+GET,/markup/{id:\d+}
+<ul>
+</ul>
+
+PUT,/markup/{id:\d+}
+<ul>
+</ul>
+
+GET,/markup
+<ul>
+</ul>
+
+POST,/markup
+<ul>
+</ul>
+
+POST,/apply-credit
+<div>Apply one credit to one invoice
+JSON Body
+<pre>
+{
+  "credit": id,
+  "invoice": id,
+}
+</pre>
+Response is currently empty
+</div>
+
+
+POST,/invoice/pay
+<div>Apply credits and payment to invoices
+JSON Body (more fields to come, e.g. cheque number, cc transaction id, etc):
+<pre>
+{
+  "paymentType": "?",
+  "payment": dddd.dd,
+  "creditCardNumber": "xxxx xxxx xxxx xxxx",
+  "cvs": "yyy",
+  "expiryMonth": "00",
+  "expiryYear": "17",
+  "nameOnCard": "foo x bar",
+  "cardType": "",
+  "creditCardPayment": "true or false",
+  "invoices": [ id1, id2, id3 ... ],
+  "credits": [ id1, id2, id3, ... ],
+}
+</pre>
+Response is currently full content of changed invoices
+</div>
+
+GET,/customer/total-credit/{id:\d+}
+<div>Return the total of all credits for the customer with the id.</diV>
+<div>Response</div>
+<pre>
+{
+    "totalCredit": 44.4,
+    "customerId": 11441
+}
+</pre>
+
+
+POST,/order/deliver/{id:\d+}
+<div>Change status of order to delivered. For now, fakes some charges.</div>
+
+PUT,/order/schedule-pickup/{id:\d+}
+<div>Request</div>
+<pre>
+{
+  "pickupInstructions": "...",
+  "dropoffInstructions": "...",
+  "pickupDate": "yyyy-mm-dd",
+  "dropoffDate": "yyyy-mm-dd"
+}
+</pre>
+<div>Response (Order)</div>
+<pre>
+{
+    "id": 505060,
+    ...
+}
+</pre>
+
+POST,/customer-only
+<h6>Role: admin<h6>
+<div>Create a customer without validation and without creating admin user
+</div>
+
+
+PUT,/order/test-rate/{serviceId}/{id:\d+}
+<div>
+Set the selectect quote of an order to the service id just for testing
+</div>
+
+GET || HEAD,/logfile || /logfile.json
+<div>super admin only</div>
+<div>Return the catalina log file</div>
+
+GET,/order-quick
+<div>admin only</div>
+<div>timing experiment</div>
+
+POST,/run-auto-invoice
+<div>admin only</div>
+<div>testing auto invoice code</div>
+
+GET,/carrier/invoice/{carrierId:\d+}/{id:\d+}
+
+GET,/carrier/invoice/{id:\d+}
+
+GET,/carrier/invoice
+
+POST,/carrier/{id:\d+}/upload-invoice
+
+GET,/deleted-invoices
+
+DELETE,/invoice/{id:\d+}
+
+PUT,/order/{id:\d+}/cancel
+
+GET,/order/{id:\d+}/invoices
+
+GET,/order/{id:\d+}/legacy-pod
+
+GET,/order/{id:\d+}/pod
+
+POST,/order/{id:\d+}/upload-pod
+
+GET,/agent/{id:\d+}
+
+GET,/agent
+
+PUT,/calculate-commissions
+
+PUT,/charge/mark-reconciled/{id:\d+}
+
+PUT,/charge/reconcile/{id:\d+}
+
+GET,/charge/search/findByInvoiceId
+
+GET,/charge/search/findByOrderId
+
+GET,/charge
+
+DELETE,/commissionstatement/{id:\d+}
+
+GET,/commissionstatement/{id:\d+}
+
+GET,/commissionstatement
+
+POST,/credit/add-from-card
+
+GET || HEAD,/logfile || /logfile.json
+
+PUT,/order/mark-reconciled/{id:\d+}
+
+PUT,/payables/generate
+
+DELETE,/payablestatement/{id:\d+}
+
+GET,/payablestatement/{id:\d+}
+
+GET,/payablestatement
+
+GET,/test/error
+
+GET,/test/exception
+
+GET,/test/throwable
+
+POST,/order/{id:\d+}/charge
+<span>admin, freightcom_staff</span>
+<ul>
+<li>accessorialId</li>
+<li>cost</li>
+<li>charge</li>
+</ul>
+
+GET,END
+

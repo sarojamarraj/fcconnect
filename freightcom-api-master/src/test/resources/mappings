@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Send a git request to backend first logging in as admin
+# E.g.  ~/systems/spring-projects/project1/src/test/resources/test-route 162.242.163.68 /api/user/search/findByLogin?name=admin
+
+if [ $# -lt 1 ]; then
+  echo "usage: `basename "${0}"` host"
+  exit
+fi
+
+HOST=$1
+route=/api/mappings
+
+x=`mktemp`
+
+
+trap "echo UNEXPECTED ERROR; rm ${x}; exit " ERR
+
+sess='mock1'`date '+%Y%m%d%H%M'`
+
+http --check-status --session=$sess -f POST $HOST/api/login username=admin password="${FREIGHTCOM_admin}"  > /dev/null
+
+http --check-status --session=$sess -f POST $HOST/api/set-session-role/1 > /dev/null
+
+http --check-status -pb --pretty=format --session=$sess "${HOST}${route}"

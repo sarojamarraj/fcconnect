@@ -1,0 +1,11 @@
+com/freightcom/migration/MigrationService$1.class
+com/freightcom/migration/AppRunner.class
+com/freightcom/migration/KeyDropper.class
+com/freightcom/migration/MigrationService$RowData.class
+com/freightcom/migration/MigrationService.class
+com/freightcom/migration/Application.class
+com/freightcom/migration/TableMap.class
+META-INF/spring-configuration-metadata.json
+com/freightcom/migration/Datasources.class
+com/freightcom/migration/Mapper.class
+com/freightcom/migration/FieldSpecification.class

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:remove="all">Charge Changed</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <p th:text="${name}">
+      Dear Sir
+    </p>
+    <p>
+      A charge in order #<span th:text="${orderId}">xxx</span> has been added or modified.
+    </p>
+    <table>
+      <tr>
+        <td>
+          <span th:text="${charge.description}">xxx</span>
+        </td>
+        <td>
+        </td>
+        <td>
+          $ <span th:text="${charge.subTotal}">xxx</span>
+        </td>
+      </tr>
+    </table>
+    <p>
+      To view this order, click the following link:
+      <br/>
+      <a th:href="@{${link}}">Order #<span th:text="${orderId}">xxx</span></a>
+    </p>
+    <p>
+      Thank you for your business <br />
+    </p>
+    <p>
+      FREIGHTCOM.COM
+    </p>
+  </body>
+</html>

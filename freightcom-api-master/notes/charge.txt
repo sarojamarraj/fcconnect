@@ -1,0 +1,27 @@
+
+
+total = subtotal + totaltax
+subtotal = charge * quantity
+
+accessorialId
+description
+currency
+charge
+quantity
+subTotal = charge * quantity
+totalTax = sum(taxes)
+total = subTotal + totalTax
+cost
+applyComission
+
+
+
+Grouped Charge
+
+accessorialId
+description
+total (should be subTotal) *****
+totalTax
+cost
+
+

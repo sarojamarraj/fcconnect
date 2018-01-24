@@ -1,0 +1,248 @@
+United States Shipments originating in United States
+Description Shipping Rating
+UPS Standard 11 11
+UPS Worldwide Express 07 07
+UPS Worldwide Expedited 08 08
+UPS Worldwide Express Plus 54 54
+UPS Worldwide Saver 65 65
+
+United States domestic shipments
+Description Shipping Rating
+UPS 2nd Day Air 02 02
+UPS 2nd Day Air A.M. 59 59
+UPS 3 Day Select 12 12
+UPS Ground 03 03
+UPS Next Day Air 01 01
+UPS Next Day Air Early 14 14
+UPS Next Day Air Saver 13 13
+
+
+
+Canada
+Description Category Shipping Rating
+UPS Expedited Canadian domestic shipments 02 02
+UPS Express Saver Canadian domestic shipments 13 13
+UPS 3 Day Select Shipments originating in Canada to CA and US 48 12 12
+UPS Access Point Economy Canadian domestic shipments 70 70
+UPS Express Canadian domestic shipments 01 01
+UPS Express Early Canadian domestic shipments 14 14
+UPS Express Saver International shipments originating in Canada 65 65
+UPS Standard Shipments originating in Canada (Domestic and Int’l) 11 11
+UPS Worldwide Expedited International shipments originating in Canada 08 08
+UPS Worldwide Express International shipments originating in Canada 07 07
+UPS Worldwide Express Plus International shipments originating in Canada 54 54
+UPS Express Early Shipments originating in Canada to CA and US 48 54 54
+European Union
+Description Shipping Rating
+UPS Access Point Economy Shipments within the European Union 70 70
+UPS Expedited Shipments originating in the European Union 08 08
+UPS Express Shipments originating in the European Union 07 07
+UPS Standard Shipments originating in the European Union 11 11
+UPS Worldwide Express Plus Shipments originating in the European Union 54 54
+UPS Worldwide Saver Shipments originating in the European Union 65 65
+Mexico
+Description Shipping Rating
+UPS Access Point Economy Mexican domestic shipments 70 70
+UPS Expedited Shipments originating in Mexico 08 08
+UPS Express Shipments originating in Mexico 07 07
+UPS Standard Shipments originating in Mexico 11 11
+UPS Worldwide Express Plus Shipments originating in Mexico 54 54
+UPS Worldwide Saver Shipments originating in Mexico 65 65
+
+
+Poland
+Description Shipping Rating
+UPS Access Point Economy Polish domestic shipments 70 70
+UPS Today Dedicated Courrier Polish domestic shipments 83 83
+UPS Today Express Polish domestic shipments 85 85
+UPS Today Express Saver Polish domestic shipments 86 86
+UPS Today Standard Polish domestic shipments 82 82
+UPS Expedited Shipments originating in Poland 08 08
+UPS Express Shipments originating in Poland 07 07
+UPS Express Plus Shipments originating in Poland 54 54
+UPS Express Saver Shipments originating in Poland 65 65
+UPS Standard Shipments originating in Poland 11 11
+
+Puerto Rico
+Description Shipping Rating
+UPS 2nd Day Air 02 02
+UPS Ground 03 03
+UPS Next Day Air 01 01
+UPS Next Day Air Early 14 14
+UPS Worldwide Expedited 08 08
+UPS Worldwide Express 07 07
+UPS Worldwide Express Plus 54 54
+UPS Worldwide Saver 65 65
+
+Undefined Countries
+Description Shipping Rating
+UPS Express 07 07
+UPS Standard 11 11
+UPS Worldwide Expedited 08 08
+UPS Worldwide Express Plus 54 54
+UPS Worldwide Saver 65 65
+
+
+All Countries
+Description Shipping Rating
+UPS Worldwide Express Freight 96 96
+UPS Worldwide Express Freight Midday 71 71
+
+
+
+
+
+Canada Domestic shipments
+Description Service Code
+UPS Expedited 19
+UPS Express 24
+UPS Express Early 23
+UPS Express Saver 20
+UPS Standard 25
+
+Canada to the United States
+Description Service Code
+UPS 3 Day Select 33
+UPS Express Early 21
+UPS Express Saver 28
+UPS Standard 03
+UPS Worldwide Expedited 05
+UPS Worldwide Express 01
+
+Other shipments originating in Canada
+Description Service Code
+UPS Express Saver 28
+UPS Worldwide Expedited 05
+UPS Worldwide Express 01
+UPS Worldwide Express Plus 21
+
+Mexico
+Description Service Code
+UPS Expedited 05
+UPS Express 01
+UPS Express Plus 21
+UPS Express Saver 28
+UPS National Express 24
+
+
+
+Poland
+Domestic shipments
+Description Service Code
+UPS Express 24
+UPS Express Plus 23
+UPS Express Saver 26
+UPS Standard 25
+UPS Today Dedicated Courier 35
+UPS Today Express 37
+UPS Today Express Saver 38
+UPS Today Intercity 36
+UPS Today Standard 34
+
+European Union
+Destination within the origin country
+Description Service Code
+UPS Express 24
+UPS Express Plus 23
+UPS Express Saver 26
+UPS Standard 25
+Destination within the European Union
+Description Service Code
+UPS Express 10
+UPS Express Plus 22
+UPS Express Saver 18
+UPS Standard 08
+
+Destination outside the European Union
+Description Service Code
+UPS Expedited 05
+UPS Express 01
+UPS Express NA 1 11
+UPS Express Saver 28
+UPS Standard 68
+UPS Worldwide Express Plus 21
+
+
+Other Countries
+Description Service Code
+UPS Express Saver 28
+UPS Standard 68
+UPS Worldwide Expedited 05
+UPS Worldwide Express 09
+UPS Worldwide Express Freight 29
+UPS Worldwide Express Plus 21
+UPS Worldwide Express Freight Midday 40
+
+All
+Description Service Code
+UPS Access Point Economy 39
+
+
+
+United States
+Description Service Code
+UPS 2nd Day Air 2DA
+UPS 2nd Day Air (Saturday Delivery) 2DAS
+UPS 2nd Day Air A.M. 2DM
+UPS 3 Day Select 3DS
+UPS Ground GND
+UPS Next Day Air 1DA
+UPS Next Day Air (Saturday Delivery) 1DAS
+UPS Next Day Air Early 1DM
+UPS Next Day Air Early (Saturday Delivery) 1DMS
+UPS Next Day Air Saver 1DP
+
+Other shipments originating in United States
+Description Service Code
+UPS Standard 03
+UPS Worldwide Expedited 05
+UPS Worldwide Express 01
+UPS Worldwide Express Plus 21
+UPS Worldwide Saver 28
+
+Puerto Rico
+Description Category Service Code
+UPS 2nd Day Air Puerto Rico to United States 02
+UPS 2nd Day Air Intra Puerto Rico Domestic 01
+UPS Ground Puerto Rico to United States and United States to Puerto Rico G
+UPS Next Day Air Puerto Rico to United States 01
+UPS Next Day Air Early Puerto Rico to United States 21
+UPS Worldwide Expedited Other shipments originating in Puerto Rico 05
+UPS Worldwide Express Other shipments originating in Puerto Rico 01
+UPS Worldwide Express Plus Other shipments originating in Puerto Rico 21
+UPS Worldwide Saver Other shipments originating in Puerto Rico 28
+
+
+
+
+Canada Domestic shipments Description Service Code
+UPS Expedited
+19
+UPS Express
+24
+UPS Express Early
+23
+UPS Express Saver
+20
+UPS Standard
+25 Canada to the United States Description Service Code
+UPS 3 Day Select
+33
+UPS Express Early
+21
+UPS Express Saver
+28
+UPS Standard
+03
+UPS Worldwide Expedited
+05
+UPS Worldwide Express
+01 Other shipments originating in Canada Description Service Code
+UPS Express Saver
+28
+UPS Worldwide Expedited
+05
+UPS Worldwide Express
+01
+UPS Worldwide Express Plus
+21

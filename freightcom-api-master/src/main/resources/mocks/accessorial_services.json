@@ -1,0 +1,268 @@
+[
+   {
+       "id": 1,
+       "name": "Pickup Tailgate",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 2,
+       "name": "Delivery Tailgate",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 3,
+       "name": "Inside Pickup",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 4,
+       "name": "Saturday Pickup",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 5,
+       "name": "Saturday Delivery",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 6,
+       "name": "Appointment Pickup",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 7,
+       "name": "Residential Pickup",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 8,
+       "name": "Residential Delivery",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 9,
+       "name": "Excess Length",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 10,
+       "name": "Sort and Segregate",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 11,
+       "name": "Single Shipment",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 12,
+       "name": "Construction Site",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 13,
+       "name": "Homeland Security",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 14,
+       "name": "Military Base Delivery",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 15,
+       "name": "Limited Access",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 16,
+       "name": "Inside Delivery",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 17,
+       "name": "Appointment Delivery",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 18,
+       "name": "Customs",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 19,
+       "name": "Cross Border Fee",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 20,
+       "name": "Pier Charge",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 21,
+       "name": "In-bond Freight",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 22,
+       "name": "Notification Fee",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 23,
+       "name": "Heated Service",
+       "description": "",
+       "type": "pallet",
+       "rate": 500
+   },
+   {
+       "id": 24,
+       "name": "Saturday Pickup",
+       "description": "",
+       "type": "env",
+       "rate": 500
+   },
+   {
+       "id": 25,
+       "name": "Saturday Delivery",
+       "description": "",
+       "type": "env",
+       "rate": 500
+   },
+   {
+       "id": 26,
+       "name": "Hold For Pickup",
+       "description": "",
+       "type": "env",
+       "rate": 500
+   },
+   {
+       "id": 27,
+       "name": "Residential Pickup",
+       "description": "",
+       "type": "env",
+       "rate": 500
+   },
+   {
+       "id": 28,
+       "name": "Residential Delivery",
+       "description": "",
+       "type": "env",
+       "rate": 500
+   },
+   {
+       "id": 29,
+       "name": "Saturday Pickup",
+       "description": "",
+       "type": "pak",
+       "rate": 500
+   },
+   {
+       "id": 30,
+       "name": "Saturday Delivery",
+       "description": "",
+       "type": "pak",
+       "rate": 500
+   },
+   {
+       "id": 31,
+       "name": "Hold For Pickup",
+       "description": "",
+       "type": "pak",
+       "rate": 500
+   },
+   {
+       "id": 32,
+       "name": "Residential Pickup",
+       "description": "",
+       "type": "pak",
+       "rate": 500
+   },
+   {
+       "id": 33,
+       "name": "Residential Delivery",
+       "description": "",
+       "type": "pak",
+       "rate": 500
+   },
+   {
+       "id": 34,
+       "name": "Saturday Pickup",
+       "description": "",
+       "type": "package",
+       "rate": 500
+   },
+   {
+       "id": 35,
+       "name": "Saturday Delivery",
+       "description": "",
+       "type": "package",
+       "rate": 500
+   },
+   {
+       "id": 36,
+       "name": "Hold For Pickup",
+       "description": "",
+       "type": "package",
+       "rate": 500
+   },
+   {
+       "id": 37,
+       "name": "Residential Pickup",
+       "description": "",
+       "type": "package",
+       "rate": 500
+   },
+   {
+       "id": 38,
+       "name": "Residential Delivery",
+       "description": "",
+       "type": "package",
+       "rate": 500
+   }
+]

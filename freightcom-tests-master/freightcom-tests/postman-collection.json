@@ -1,0 +1,1859 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Freightcom Tests",
+		"_postman_id": "3019b1de-787e-904a-068b-e02497df03c6",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1 Login",
+			"description": "Login tests",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonObject = xml2Json(responseBody);",
+									"",
+									"console.log(jsonObject);",
+									"",
+									"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");",
+									"",
+									"postman.setEnvironmentVariable(\"userId\", jsonObject.http.body.input['$'].value);",
+									"",
+									"console.log(postman.getEnvironmentVariable(\"userId\"));",
+									"",
+									"tests[\"User id is not null\" ] = postman.getEnvironmentVariable(\"userId\");",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/login",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query User Info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); }",
+									"catch (e) { }",
+									"",
+									"",
+									"tests[\"Authorities returned\"] = data.authorities;",
+									"",
+									"var adminRole = _.filter(data.authorities, function(item) { return item.roleName == \"ADMIN\"; });",
+									"",
+									"tests['Has admin role'] = adminRole && adminRole.length;",
+									"",
+									"postman.setEnvironmentVariable(\"roleId\", adminRole[0].id);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/user/{{userId}}",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Set Admin Role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); }",
+									"catch (e) { }",
+									"",
+									"",
+									"",
+									"",
+									"tests['Role Matches'] = postman.getEnvironmentVariable(\"roleId\") == data.id;",
+									""
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"console.log(postman.getEnvironmentVariable(\"roleId\"));"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/set-session-role/{{roleId}}",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "1.5 Customer",
+			"description": "",
+			"item": [
+				{
+					"name": "Query A Customer",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { customer = JSON.parse(responseBody); }",
+									"catch (e) { }",
+									"",
+									"",
+									"tests[\"Customer returned\"] = customer;",
+									"",
+									"// these are defined in #303",
+									"tests[\"allowNewOrders\"] = customer.allowNewOrders;",
+									"tests[\"suspended\"] = customer.suspended === false;",
+									"",
+									"tests[\"autoInvoice\"] = typeof customer.autoInvoice == 'string';",
+									"",
+									"tests[\"autoInvoice one of valid terms\"] = ",
+									"    customer.autoInvoice == 'ON_BOOKING' || ",
+									"    customer.autoInvoice == 'ON_DELIVERY' || ",
+									"    customer.autoInvoice == 'DAILY' || ",
+									"    customer.autoInvoice == 'WEEKLY' || ",
+									"    customer.autoInvoice == 'MONTHLY';",
+									"",
+									"tests[\"autoCharge\"] = typeof customer.autoCharge == 'string'",
+									"tests[\"autoCharge one of valid terms\"] = ",
+									"    customer.autoCharge == 'NEVER' || ",
+									"    customer.autoCharge == 'IMMEDIATELY' || ",
+									"    customer.autoCharge == 'ON_DUE_DATE' || ",
+									"    customer.autoCharge == 'DAILY' || ",
+									"    customer.autoCharge == 'WEEKLY' || ",
+									"    customer.autoCharge == 'MONTHLY';",
+									"",
+									"tests[\"invoiceTerm\"] = typeof customer.invoiceTerm == 'number';",
+									"tests[\"invoiceTermWarning\"] = typeof customer.invoiceTermWarning == 'number';",
+									"tests[\"invoiceCurrency\"] = typeof customer.invoiceCurrency == 'string';",
+									"tests[\"invoiceEmail\"] = typeof customer.invoiceEmail  == 'string';",
+									"tests[\"pastDueAction\"] = typeof customer.pastDueAction == 'string';",
+									"",
+									"tests[\"shippingPODRequired\"] = typeof customer.shippingPODRequired == 'boolean';",
+									"tests[\"shippingNMFCRequired\"] = typeof customer.shippingNMFCRequired == 'boolean';",
+									"",
+									"//tsting for some random legacy fields present?",
+									"tests[\"NO LEGACY fields\"] = ! (",
+									"    customer.affiliateId || ",
+									"    customer.affRegPage ||",
+									"    customer.flatCost1 ||",
+									"    customer.subAgentId ||",
+									"    customer.affiliate ||",
+									"    customer.isWebCustomer",
+									")",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/customer/11259",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "modify Customer - set Some Values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { customer = JSON.parse(responseBody); }",
+									"catch (e) { }",
+									"",
+									"",
+									"tests[\"Customer returned\"] = customer;",
+									"",
+									"// these are defined in #303",
+									"tests[\"Agent ID properly set\"] = customer.agentId == environment.agentId;",
+									"tests[\"salesAgent properly set\"] = customer.salesAgent.id == environment.agentId;",
+									"tests[\"Commission % is set\"] = customer.salesAgent.commissionPercent > 0;",
+									"",
+									"tests[\"Suspended is false\"] = customer.suspended === false;",
+									"tests[\"AllowNewOrders is true\"] = customer.allowNewOrders === true;",
+									"tests[\"invoice on delivery\"] = customer.autoInvoice == 'ON_DELIVERY';",
+									"tests[\"don't autocharge\"] = customer.autoCharge == 'NEVER';",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/customer/11259",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"salesAgent\" : { \"id\" : \"{{agentId}}\" },\n\t\"invoiceEmail\" : \"palomino-customer@palominosys.com\",\n\t\"allowNewOrders\" : true,\n\t\"autoInvoice\" : \"ON_DELIVERY\",\n\t\"autoCharge\" : \"NEVER\",\n\t\"suspended\" : false,\n\t\"invoiceCurrency\" : \"CAD\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "modify Customer - set some Illegal Values",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { customer = JSON.parse(responseBody); }",
+									"catch (e) { }",
+									"",
+									"",
+									"// these are defined in #303",
+									"tests[\"Error resonse\"] = responseCode.code === 400;",
+									"tests[\"Invalid currency message\"] = customer.invoiceCurrency === \"invalid value\";",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/customer/11259",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"invoiceCurrency\" : \"JJJ\",\n\t\"salesAgent\" : { \"id\" : \"{{agentId}}\" }\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "modify Customer - re-set values",
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/customer/11259",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"salesAgent\" : { \"id\" :  \"{{agentId}}\"  },\n\t\"invoiceEmail\" : \"palomino-customer@palominosys.com\",\n\t\"allowNewOrders\" : true,\n\t\"autoInvoice\" : \"ON_BOOKING\",\n\t\"autoCharge\" : \"NEVER\",\n\t\"suspended\" : false,\n\t\"invoiceCurrency\" : \"CAD\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Invite staff user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); }",
+									"catch (e) { }",
+									"",
+									"",
+									"tests[\"status: success\"] = data.status == \"SUCCESS\";",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/customer/11259/invite?email=markus@palominosys.com",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2 Admin Shipments",
+			"description": "List Shipments",
+			"item": [
+				{
+					"name": "Query Shipments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); }",
+									"catch (e) { }",
+									"",
+									"tests['Have orders'] = data._embedded.customerOrders.length;",
+									"",
+									"//_.each(data._embedded.customerOrders, function(order) { ",
+									"//    console.log(order.scheduledPickup);",
+									"//})",
+									"",
+									"//tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/submitted-orders?sort=id,desc",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query Unbilled Charges",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); }",
+									"catch (e) { }",
+									"",
+									"tests['Have at least one order with unbilled charges'] = data._embedded.customerOrders.length > 0;",
+									"",
+									"//_.each(data._embedded.customerOrders, function(order) { ",
+									"//    console.log(order.scheduledPickup);",
+									"//})",
+									"",
+									"var firstOrder = data._embedded.customerOrders[0];",
+									"",
+									"postman.setEnvironmentVariable(\"firstBillableOrderId\", firstOrder.id);",
+									"postman.setEnvironmentVariable(\"totalUnbilled\", firstOrder.unbilledCharges);",
+									"",
+									"tests[\"total unbilled \"+firstOrder.unbilledCharges+\" > 0.0\"] = firstOrder.unbilledCharges > 0.0;",
+									"tests[\"total unbilled <= total charges\"] = firstOrder.unbilledCharges <= firstOrder.totalCharge;",
+									"",
+									"",
+									"//tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/submitted-orders?sort=id,DESC&invoiceStatus=unbilled charges",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query Order, check Charges",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try { ",
+									"    data = JSON.parse(responseBody); ",
+									"    order = data;",
+									"}",
+									"catch (e) { }",
+									"",
+									"//tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+									"",
+									"",
+									"// --- checking the Charges",
+									"",
+									"totalUnbilled = 0.0;",
+									"total = 0.0;",
+									"correctTotals = true;",
+									"currencies = true;",
+									"descriptions = true;",
+									"correctSubtotals = true;",
+									"if (! totalUnbilled ) totalUnbilled = 0; //previous tests",
+									"",
+									"_.each(order.charges, function(charge) { ",
+									"    total = total + charge.subTotal;",
+									"    if (charge.status == \"unbilled\") totalUnbilled = totalUnbilled + charge.subTotal;",
+									"    if (Math.abs(charge.total.toFixed(2) - (charge.subTotal.toFixed(2) + charge.totalTax.toFixed(2))) > 0.001) { correctTotals = false; }",
+									"    if (charge.charge * charge.quantity != charge.subTotal) correctSubtotals = false;",
+									"    if (charge.currency === null) currencies = false;",
+									"    if (charge.description === null) descriptions = false;",
+									"});",
+									"",
+									"console.log(\"total of charge.subTotal: \" + total);",
+									"tests[\"Unbilled charges match Order.unbilledCharges\"] = Math.abs(totalUnbilled - order.unbilledCharges) < .01;",
+									"tests[\"All charges totals match Order.total\"] = Math.abs(total - order.totalCharge) < .01;",
+									"tests[\"All charge totals are correct\"] = correctTotals;",
+									"tests[\"All charge subtotals are correct\"] = correctSubtotals;",
+									"tests[\"All charges have a currency\"] = currencies;",
+									"tests[\"All charges have a description\"] = descriptions;",
+									"",
+									"// --- check order status is correct",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/order/{{firstBillableOrderId}}",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2.5 Place a Shipment",
+			"description": "",
+			"item": [
+				{
+					"name": "Create New DRAFT Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { order = JSON.parse(responseBody); }",
+									"catch (e) { }",
+									"",
+									"",
+									"tests[\"returns order id \" + order.id] = order.id !== null;",
+									"",
+									"newOrderId = order.id;",
+									"postman.setEnvironmentVariable(\"newOrderId\", newOrderId);",
+									"",
+									"tests[\"new order is in draft\"] = order.orderStatus.name == \"DRAFT\";",
+									"tests[\"new order is ENV package type\"] = order.packageTypeName == \"env\";",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/order",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"shipDate\":\"2017-04-30\",\n\"customerId\":11259,\n\"customer\":null,\n\"shipFrom\":{\"consigneeName\":\"Palomino Inc.\",\"address1\":\"533 College St\",\"address2\":\"Suite 404\",\"city\":\"Toronto\",\"postalCode\":\"M6G1A8\",\"province\":\"ON\",\"country\":\"CA\",\"phone\":\"416-505-4865\",\"email\":\"markus@palominosys.com\",\"name\":\"Bob Tester\",\"emailNotification\":true,\"company\":\"Palomino Inc.\",\"companyName\":\"Palomino Inc.\"},\n\"shipTo\":{\"consigneeName\":\"Freightcom Inc.\",\"address1\":\"Pine Valley Ave\",\"city\":\"Vaughan\",\"postalCode\":\"L4L 7R6\",\"province\":\"ON\",\"country\":\"CA\",\"name\":\"Tony Kermally\",\"phone\":\"416-555-9858\",\"email\":\"tonytester@palominosys.com\",\"emailNotification\":true,\"company\":\"Freightcom Inc.\",\"companyName\":\"Freightcom Inc.\"},\"packageTypeName\":\"env\",\"referenceCode\":\"REF980970606\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get Rates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { ",
+									"    data = JSON.parse(responseBody); ",
+									"    quotes = data._embedded.orderRateQuote;",
+									"}",
+									"catch (e) { }",
+									"",
+									"",
+									"",
+									"",
+									"tests[\"got at least one rate quote\"] = quotes.length > 0;",
+									"quoteId = quotes[0].id;",
+									"postman.setEnvironmentVariable(\"quoteId\", quoteId);",
+									"",
+									"tests['totalCharges > 0'] = quotes[0].totalCharges > 0;",
+									"postman.setEnvironmentVariable(\"totalCharges\", quotes[0].totalCharges);",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/carrier_rates/{{newOrderId}}",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\"shipDate\":\"2017-04-30\",\n\"customerId\":11259,\n\"customer\":null,\n\"shipFrom\":{\"consigneeName\":\"Palomino Inc.\",\"address1\":\"533 College St\",\"address2\":\"Suite 404\",\"city\":\"Toronto\",\"postalCode\":\"M6G1A8\",\"province\":\"ON\",\"country\":\"CA\",\"phone\":\"416-505-4865\",\"email\":\"markus@palominosys.com\",\"name\":\"Bob Tester\",\"emailNotification\":true,\"company\":\"Palomino Inc.\",\"companyName\":\"Palomino Inc.\"},\n\"shipTo\":{\"consigneeName\":\"Freightcom Inc.\",\"address1\":\"Pine Valley Ave\",\"city\":\"Vaughan\",\"postalCode\":\"L4L 7R6\",\"province\":\"ON\",\"country\":\"CA\",\"name\":\"Tony Kermally\",\"phone\":\"416-555-9858\",\"email\":\"tonytester@palominosys.com\",\"emailNotification\":true,\"company\":\"Freightcom Inc.\",\"companyName\":\"Freightcom Inc.\"},\"packageTypeName\":\"env\",\"referenceCode\":\"REF980970606\"}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Select Rate/Quote",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { order = JSON.parse(responseBody); }",
+									"catch (e) { }",
+									"",
+									"",
+									"tests[\"returns order id \" + order.id] = order.id !== null;",
+									"tests[\"order is still in draft\"] = order.statusName == \"DRAFT\";",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/order/select-rate/{{newOrderId}}/{{quoteId}}",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "BOOK Order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { order = JSON.parse(responseBody); }",
+									"catch (e) { }",
+									"",
+									"",
+									"tests[\"returns order id \" + order.id] = order.id !== null;",
+									"tests[\"order is READY FOR SHIPPING\"] = order.statusName == \"READY FOR SHIPPING\";",
+									"tests[\"order has 3 charges\"] = order.charges.length == 3;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/order/book/{{newOrderId}}",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"id\":{{newOrderId}},\n\t\"scheduledPickup\": {\n\t\t\"pickupDate\":\"2017-04-12\",\n\t\t\"pickupReadyTime\":\"09:00\",\n\t\t\"pickupCloseTime\":\"17:00\",\n\t\t\"deliveryCloseTime\":\"17:00\",\n\t\t\"pickupInstructions\":\"Please check back door\",\n\t\t\"deliveryInstructions\":\"be on time\"\n\t}\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Add a charge",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { ",
+									"    charge = JSON.parse(responseBody); ",
+									"    tests[\"taxes of 13% calculated correctly\"] = charge.totalTax == 1.3;",
+									"    tests[\"charge total is correct: 11.30\"] = charge.totalTax + charge.charge == 11.3;",
+									"}",
+									"",
+									"catch (e) { ",
+									"    tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/order/{{newOrderId}}/charge",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"accessorialId\":26,\n\t\"charge\":10,\n\t\"cost\":8\n}\n"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Invoice the order",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { ",
+									"    charge = JSON.parse(responseBody); ",
+									"   ",
+									"}",
+									"",
+									"catch (e) { ",
+									"    tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/generate-invoice",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"orders\" : [ { \"id\": \"{{newOrderId}}\" } ],\n\t\"customer\": { \"id\": 11259 }\n}\n"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query Order Again",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try { ",
+									"    data = JSON.parse(responseBody); ",
+									"    order = data;",
+									"}",
+									"catch (e) { ",
+									"    tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									"//tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+									"",
+									"var totalUnbilled = order.totalUnbilled;",
+									"",
+									"// --- checking the Charges",
+									"",
+									"total = 0.0;",
+									"correctTotals = true;",
+									"currencies = true;",
+									"descriptions = true;",
+									"correctSubtotals = true;",
+									"if (! totalUnbilled ) totalUnbilled = 0; //previous tests",
+									"",
+									"_.each(order.charges, function(charge) { ",
+									"    if (charge.status == \"unbilled\") total = total + charge.total;",
+									"    if (Math.abs(charge.total - (charge.subTotal + charge.totalTax)) > 0.001) { correctTotals = false; }",
+									"    if (charge.charge * charge.quantity != charge.subTotal) correctSubtotals = false;",
+									"    if (charge.currency === null) currencies = false;",
+									"    if (charge.description === null) descriptions = false;",
+									"})",
+									"",
+									"tests[\"Order now has 4 charges\"] = order.charges.length == 4;",
+									"tests[\"All charge totals are correct\"] = correctTotals;",
+									"tests[\"All charge subtotals are correct\"] = correctSubtotals;",
+									"tests[\"All charges have a currency\"] = currencies;",
+									"tests[\"All charges have a description\"] = descriptions;",
+									"",
+									"// --- check order status is correct",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/order/{{newOrderId}}",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2.6 Post Updates",
+			"description": "",
+			"item": [
+				{
+					"name": "log an status update - OLD",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); }",
+									"catch (e) { ",
+									"        tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									"tests[\"This Endpoint should not exist\"] = data.status == 404;",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/order/{{newOrderId}}/status",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"statusId\":1\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "add an update",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); }",
+									"catch (e) { ",
+									"        tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									"tests[\"returns success\"] = data.status == \"ok\";",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/order/{{newOrderId}}/update",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"comment\": \"postman test status update\",\n\t\"private\" : false,\n\t\"invoice\" : false\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "get order updates",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"var events;",
+									"",
+									"try { ",
+									"    events = JSON.parse(responseBody)._embedded.loggedEvents; ",
+									"",
+									"    tests[\"Got udpates\"] = events;",
+									"",
+									"    tests[\"update properly saved\"] = events[events.length - 1].comment == \"postman test status update\";",
+									"    ",
+									"}",
+									"catch (e) { ",
+									"    tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/order/{{newOrderId}}/status-messages?page=0&size=1000&order=id,desc\n",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3 Payables & Commission",
+			"description": "",
+			"item": [
+				{
+					"name": "agent report commission",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); }",
+									"catch (e) { }",
+									"",
+									"tests[\"Should have created 1 Commission at least\"] = data.length > 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/agent/{{agentId}}/report-commission",
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Calc Payables",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); }",
+									"catch (e) { }",
+									"",
+									"tests[\"Should have created 1 Payables at least\"] = data.length > 0;"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/payables/generate",
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query Payables",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try { ",
+									"    data = JSON.parse(responseBody); ",
+									"    payable = data._embedded.payable;",
+									"}",
+									"catch (e) {",
+									"        tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									"tests['Have payables'] = payable;",
+									"",
+									"hasCharges = true;",
+									"hasAmounts = true;",
+									"hasOrders = true;",
+									"hasCarrier = true;",
+									"",
+									"_.each(payable, function(p) { ",
+									"  if (p.carrierId === null) hasCarrier = false;",
+									"  if (p.chargeCount < 1) hasCharges = false;",
+									"  if (p.orderCount < 1) hasOrders = false;",
+									"  if (p.totalAmount === null) hasAmounts = false;",
+									"})",
+									"",
+									"tests[\"all payables have amounts\"] = hasAmounts;",
+									"tests[\"all payables have charges\"] = hasCharges;",
+									"tests[\"all payables have orders\"] = hasCharges;",
+									"tests[\"all payables have carrier set\"] = hasCarrier;",
+									"",
+									"// TODO: add test that actual amount matches expected",
+									"",
+									"//tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/payablestatement?sort=id,desc",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query Commissions",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); ",
+									"    commission = data._embedded.commissionPayable;",
+									"    tests['Found commmissions'] = commission;",
+									"    ",
+									"    hasCharges = true;",
+									"    hasAmounts = true;",
+									"    hasOrders = true;",
+									"    hasAgent = true;",
+									"    ",
+									"    _.each(commission, function(p) { ",
+									"      if (p.agentId === null) hasAgent = false;",
+									"      if (p.chargeCount < 1) hasCharges = false;",
+									"      if (p.orderCount < 1) hasOrders = false;",
+									"      if (p.totalAmount === null) hasAmounts = false;",
+									"    })",
+									"    ",
+									"    tests[\"all commissions have amounts\"] = hasAmounts;",
+									"    tests[\"all commissions have charges\"] = hasCharges;",
+									"    tests[\"all commissions have orders\"] = hasOrders;",
+									"    tests[\"all commissions have agent set\"] = hasAgent;",
+									"    ",
+									"    // TODO: add test that actual amount matches expected",
+									"    ",
+									"    //tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+									"",
+									"}",
+									"catch (e) {",
+									"    tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/commissionstatement?sort=id,desc",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4 invoices",
+			"description": "",
+			"item": [
+				{
+					"name": "Query Invoices",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); ",
+									"    invoices = data._embedded.invoice;",
+									"    tests['Found invoices'] = invoices;",
+									"    ",
+									"    hasStatus = true;",
+									"    hasAmounts = true;",
+									"    creditsOK = true;",
+									"    hasCustomer = true;",
+									"",
+									"    _.each(invoices, function(p) { ",
+									"      if (! p.customer ) hasCustomer = false;",
+									"      if (! p.amount ) hasAmounts = false;",
+									"      if (p.creditedAmount > p.amount) creditsOK = false;",
+									"      if (! (p.paymentStatus === 1 || p.paymentStatus === 0 )) hasStatus = false;",
+									"    })",
+									"    ",
+									"    tests[\"all invoices have customers\"] = hasCustomer;",
+									"    tests[\"all credits are OK\"] = creditsOK;",
+									"    tests[\"all invoices have amounts > 0 \"] = hasAmounts;",
+									"    tests[\"all invoices have valid Status\"] = hasStatus;",
+									"",
+									"    // TODO: add test that actual amount matches expected",
+									"    ",
+									"    //tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+									"",
+									"}",
+									"catch (e) {",
+									"    tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/invoice?sort=id,desc",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query UNPAID Invoices",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); ",
+									"    invoices = data._embedded.invoice;",
+									"    tests['Found invoices'] = invoices;",
+									"    ",
+									"    hasStatus = true;",
+									"    hasAmounts = true;",
+									"    creditsOK = true;",
+									"    hasCustomer = true;",
+									"",
+									"    _.each(invoices, function(p) { ",
+									"      if (! p.customer ) hasCustomer = false;",
+									"      if (! p.amount ) hasAmounts = false;",
+									"      if (p.creditedAmount > p.amount) creditsOK = false;",
+									"      if (! (p.paymentStatus === 0 )) hasStatus = false;",
+									"    })",
+									"    ",
+									"    tests[\"all invoices have customers\"] = hasCustomer;",
+									"    tests[\"all credits are OK\"] = creditsOK;",
+									"    tests[\"all invoices have amounts > 0 \"] = hasAmounts;",
+									"    tests[\"all invoices have valid Status\"] = hasStatus;",
+									"",
+									"    // TODO: add test that actual amount matches expected",
+									"    ",
+									"    //tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+									"    ",
+									"    postman.setEnvironmentVariable(\"unpaidInvoice\", invoices[0].id );    ",
+									"    postman.setEnvironmentVariable(\"unpaidAmount\", invoices[0].amountRemaining );    ",
+									"",
+									"}",
+									"catch (e) {",
+									"    tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									"",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/invoice?sort=id,desc&paymentStatus=0",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "enter payment for invoice",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"",
+									"",
+									"var data;",
+									"",
+									"try { ",
+									"    ",
+									"    //assuming that this responds with paid invoices in result body, which would make sense:",
+									"    ",
+									"    invoices = JSON.parse(responseBody); ",
+									"    tests[\"paid amount is correct\"] = invoices[0].paidAmount == 1.0;",
+									"",
+									"    tests[\"amount remaining is adjusted correctly\"] = invoices[0].amountRemaining = environment.unpaidAmount - 1.0;",
+									"}",
+									"",
+									"catch (e) {",
+									"    tests[\"EXCEPTION: \" + e.message] = false;",
+									"}",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/invoice/pay",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"invoices\" : [  \"{{unpaidInvoice}}\" ],\n\t\"payment\" : 1.0,\n\t\"paymentType\" : \"check\",\n\t\"reference\" : \"CHQ#123456\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5 Agents",
+			"description": "",
+			"item": [
+				{
+					"name": "Query Agents",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); ",
+									"    agents = data._embedded.agent;",
+									"    tests['Found agents'] = agents;",
+									"",
+									"    _.each(agents, function(p) { ",
+									"        ",
+									"    })",
+									"",
+									"    // TODO: add test that actual amount matches expected",
+									"    ",
+									"    //tests[\"Response time is less than 200ms\"] = responseTime < 200;",
+									"",
+									"}",
+									"catch (e) {",
+									"    tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/agent?sort=id,desc",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query Agents with Parent Name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); ",
+									"    agents = data._embedded.agent;",
+									"    postman.setEnvironmentVariable(\"numOfAgentsUnderS2\", agents.length);",
+									"}",
+									"catch (e) {",
+									"    tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/agent?parentName=S2%20Daudlin&sort=id,DESC",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query Agents with Parent Id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); ",
+									"    agents = data._embedded.agent;",
+									"    tests['Number of found agents = ' + environment.numOfAgentsUnderS2] = agents.length == environment.numOfAgentsUnderS2;",
+									"}",
+									"catch (e) {",
+									"    tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/agent?parentId=12288&sort=id,DESC",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Query Agent Details",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try { data = JSON.parse(responseBody); ",
+									"    tests['Found agent'] = data;",
+									"    tests['Found agent name = S2 Daudlin'] = data.name == \"S2 Daudlin\";",
+									"}",
+									"catch (e) {",
+									"    tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/agent/{{agentId}}",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update Agent",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try {",
+									"    data = JSON.parse(responseBody); ",
+									"    tests['Modified agent'] = data;",
+									"    tests['Modified viewInvoices'] = data.viewInvoices === JSON.parse(environment.randomBoolean);",
+									"    postman.setEnvironmentVariable(\"oldViewInvoices\", data.viewInvoices);",
+									"    tests['Modified allowNewOrders'] = data.allowNewOrders === JSON.parse(environment.randomBoolean);",
+									"    postman.setEnvironmentVariable(\"oldAllowNewOrders\", data.allowNewOrders);",
+									"    tests['Modified comission'] = data.commissionPercent === JSON.parse(environment.randomNumber);",
+									"    postman.setEnvironmentVariable(\"oldCommissionPercent\", data.commissionPercent);",
+									"    tests['Modified term'] = data.term === \"NEVER\";",
+									"    postman.setEnvironmentVariable(\"oldTerm\", data.term);",
+									"}",
+									"catch (e) {",
+									"    tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									"",
+									""
+								]
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var termOptions = [\"NEVER\", \"WEEKLY\", \"BIWEEKLY\", \"MONTHLY\"];",
+									"var randomTerm = termOptions[Math.floor(Math.random()*termOptions.length)];",
+									"var randomNumber = Math.floor(Math.random() * (99 - 1)) + 1;",
+									"",
+									"postman.setEnvironmentVariable(\"randomBoolean\", Math.random() >= 0.5);",
+									"postman.setEnvironmentVariable(\"randomTerm\", randomTerm);",
+									"postman.setEnvironmentVariable(\"randomNumber\", randomNumber);",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/agent/5481",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"allowNewOrders\": {{randomBoolean}},\n\t\"viewInvoices\": {{randomBoolean}},\n\t\"commissionPercent\": {{randomNumber}},\n\t\"term\": \"NEVER\",\n\t\"parentSalesAgentId\": 12288\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Requery Agent",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var data;",
+									"",
+									"try {",
+									"    data = JSON.parse(responseBody); ",
+									"    tests['Agent Found'] = data;",
+									"    tests['viewInvoices'] = data.viewInvoices === JSON.parse(environment.oldViewInvoices);",
+									"    ",
+									"    tests['allowNewOrders'] = data.allowNewOrders === JSON.parse(environment.oldAllowNewOrders);",
+									"    ",
+									"    tests['comission'] = data.commissionPercent === JSON.parse(environment.oldCommissionPercent);",
+									"    ",
+									"    tests['term'] = data.term === \"NEVER\";",
+									"    ",
+									"}",
+									"catch (e) {",
+									"    tests[\"EXCEPTION: \" + e.message ] = false;",
+									"}",
+									""
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://{{host}}:{{port}}/api/agent/5481",
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{login}}",
+									"type": "text",
+									"enabled": true
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text",
+									"enabled": true
+								}
+							]
+						},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

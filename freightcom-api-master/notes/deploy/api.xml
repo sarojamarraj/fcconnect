@@ -1,0 +1,38 @@
+<Context docBase="/opt/test-api-0.1.0.war"
+         sessionCookiePath="/"
+         crossContext="true" >
+  <Parameter name="spring.datasource.url" value="jdbc:mysql://localhost/freightcom_test" override="true"/>
+  <Parameter name="spring.datasource.username" value="freightcom" override="true"/>
+  <Parameter name="spring.datasource.password" value="bryan" override="true"/>
+  <Parameter name="logging.level.org.springframework.security.authentication" value="INFO" override="true"/>
+  <Parameter name="logging.level.org.apache.catalina.filters.RequestDumperFilter" value="INFO" override="true"/>
+  <Parameter name="logging.level.org.springframework.jdbc.core" value="INFO" override="true"/>
+  <Parameter name="logging.level.org.springframework.security.core" value="INFO" override="true"/>
+  <Parameter name="spring.jpa.show-sql" value="false" override="true"/>
+  <Parameter name="logging.level.com.freightcom.api" value="INFO" override="true"/>
+  <Parameter name="logging.level.hello" value="INFO" override="true"/>
+  <Parameter name="logging.level.org.springframework.web" value="INFO" override="true"/>
+  <Parameter name="logging.file" value="" override="true"/>
+
+  <Parameter name="freightcom.bugsnag_devel" value="false" override="true"/>
+
+  <Parameter name="webpal.url" value="https://bryan.webpal.net" override="true"/>
+  <Parameter name="webpal.login" value="freightcom" override="true"/>
+  <Parameter name="webpal.password" value="bryan" override="true"/>
+
+  <Parameter name="management.port" value="8097" override="true"/>
+  <Parameter name="spring.datasource.jmx-enabled" value="false" override="true"/>
+  <Parameter name="spring.jmx.enabled" value="false" override="true"/>
+  <Parameter name="spring.jmx.default-domain" value="x1ktest" override="true"/>
+  <Parameter name="endpoints.jmx.enabled" value="false" override="true"/>
+  <Parameter name="endpoints.jmx.unique-names" value="true" override="true"/>
+  <Parameter name="endpoints.jmx.domain" value="x1ktest" override="true"/>
+
+  <Parameter name="ups.account.number" value="39WY87" override="true" />
+  <Parameter name="ups.ratings.url" value="https://wwwcie.ups.com/ups.app/xml/Rate" override="true" />
+  <Parameter name="ups.time.in.service.url" value="https://wwwcie.ups.com/ups.app/xml/TimeInTransit" override="true" />
+  <Parameter name="ups.accesskey" value="bryan" override="true" />
+  <Parameter name="ups.username" value="FCUPS2017" override="true" />
+  <Parameter name="ups.password" value="bryan" override="true" />
+
+</Context>

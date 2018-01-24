@@ -1,0 +1,11 @@
+[
+    {
+        "id": 1,
+        "name": "John Smith",
+        "sales_agent": {
+            "id": "1",
+            "name": "James Doe",
+            "commission": "5%"
+        }
+    }
+]

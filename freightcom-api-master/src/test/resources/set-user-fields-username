@@ -1,0 +1,29 @@
+#!/bin/bash
+
+HOST=$1
+login=$2
+shift 2
+
+echo RUNNING
+echo $HOST $login
+
+x=`mktemp`
+
+trap "echo -e '\\n\\nEXITING\\n'; rm -f ${x}" EXIT
+trap "echo UNEXPECTED ERROR; rm ${x}; exit " ERR
+
+sess=`openssl rand -base64 12 | tr -d '=/'`
+
+http --check-status --session=$sess -f POST $HOST:8080/api/login username=admin password="${FREIGHTCOM_admin}"
+
+
+http --check-status -pHBhb --session=$sess http://${HOST}:8080/api/user/search/findByLogin "name==${login}"
+http --check-status -pb --session=$sess http://${HOST}:8080/api/user/search/findByLogin "name==${login}" > $x
+
+id=`php json_extract.php $x '_embedded.user.0.resourceId'`
+echo "ID IS '$id'"
+
+http --check-status --session=$sess --json -f PUT http://${HOST}:8080/api//user/update/$id $*
+
+
+

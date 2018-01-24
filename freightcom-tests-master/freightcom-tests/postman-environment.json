@@ -1,0 +1,148 @@
+{
+  "id": "4dc261be-5f72-7f82-058a-4a06c57720b9",
+  "name": "Freightcom Tests",
+  "values": [
+    {
+      "enabled": true,
+      "key": "host",
+      "value": "69.90.139.63",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "port",
+      "value": "8094",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "login",
+      "value": "sdaudlin",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "password",
+      "value": "FssN9yvSEmdsy6RU",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "targetResponseTime",
+      "value": "500",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "userId",
+      "value": "7455",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "roleId",
+      "value": "12286",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "firstBillableOrderId",
+      "value": "506724",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "totalUnbilled",
+      "value": "3282.21",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "newOrderId",
+      "value": "506771",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "quoteId",
+      "value": "8858",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "totalCharges",
+      "value": "382.64",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "agentId",
+      "value": "12288",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "unpaidInvoice",
+      "value": "111224",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "unpaidAmount",
+      "value": "396.96",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "numOfAgentsUnderS2",
+      "value": "2",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "randomBoolean",
+      "value": "false",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "randomTerm",
+      "value": "MONTHLY",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "randomNumber",
+      "value": "97",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "oldViewInvoices",
+      "value": "false",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "oldAllowNewOrders",
+      "value": "false",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "oldCommissionPercent",
+      "value": "97",
+      "type": "text"
+    },
+    {
+      "enabled": true,
+      "key": "oldTerm",
+      "value": "NEVER",
+      "type": "text"
+    }
+  ],
+  "timestamp": 1493580585238,
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2017-04-30T20:21:29.005Z",
+  "_postman_exported_using": "Postman/4.10.7"
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:remove="all">New Invoice</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <p th:text="${name}">
+      Dear Sir
+    </p>
+    <p>
+      A new invoice #<span th:text="${invoiceId}">xxx</span> has been created for a total of <span th:text="${invoiceCurrency}">$</span> <span th:text="${invoiceTotal}">$</span>.
+    </p>
+    <p>
+      <span th:text="${invoiceCredit}"></span>
+    </p>
+    <p>
+      To view this invoice, click the following link:
+      <br/>
+      <a th:href="@{${link}}">Invoice #<span th:text="${invoiceId}">xxx</span></a>
+    </p>
+    <p>
+      Thank you for your business <br />
+    </p>
+    <p>
+      FREIGHTCOM.COM
+    </p>
+  </body>
+</html>

@@ -1,0 +1,11 @@
+update user set email='noexist@palominoys.com' where email not like '%@palomino%';
+update shipping_address set email='noexist@palominoys.com' where email not like '%@palomino%';
+update address set email_address='noexist@palominoys.com' where email_address not like '%@palomino%';
+update customer set email='noexist@palominosys.com' where email not like '%@palomino%';
+update customer set invoice_email='noexist@palominosys.com' where invoice_email not like '%@palomino%';
+update distribution set email='noexist@palominosys.com' where email not like '%@palomino%';
+update address set email_address='noexist@palominosys.com' where email_address not like '%@palomino%';
+update address_book set contact_email='noexist@palominosys.com' where contact_email not like '%@palomino%';
+update claim set email_address='noexist@palominosys.com' where email_address not like '%@palomino%';
+update pickup set contact_email='noexist@palominosys.com' where contact_email not like '%@palomino%';
+update stored_credit_card set email='noexist@palominoys.com' where email not like '%@palomino%';

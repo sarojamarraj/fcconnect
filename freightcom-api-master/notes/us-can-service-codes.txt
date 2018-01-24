@@ -1,0 +1,97 @@
+US INTL
+Description Shipping Rating
+UPS Standard 11 11
+UPS Worldwide Express 07 07
+UPS Worldwide Expedited 08 08
+UPS Worldwide Express Plus 54 54
+UPS Worldwide Saver 65 65
+
+US US
+Description Shipping Rating
+UPS 2nd Day Air 02 02
+UPS 2nd Day Air A.M. 59 59
+UPS 3 Day Select 12 12
+UPS Ground 03 03
+UPS Next Day Air 01 01
+UPS Next Day Air Early 14 14
+UPS Next Day Air Saver 13 13
+
+
+
+CA CA
+Description Shipping Rating
+UPS Expedited 02 02
+UPS Express Saver 13 13
+UPS 3 Day Select 12 12
+UPS Access Point Economy 70 70
+UPS Express 01 01
+UPS Express Early 14 14
+UPS Standard 11 11
+CA INTL
+Description Shipping Rating
+UPS Express Saver 65 65
+UPS Standard 11 11
+UPS Worldwide Expedited 08 08
+UPS Worldwide Express 07 07
+UPS Worldwide Express Plus 54 54
+CA US
+Description Shipping Rating
+UPS Express Early 54 54
+UPS 3 Day Select 12 12
+UPS Standard 11 11
+UPS Worldwide Expedited 08 08
+UPS Worldwide Express 07 07
+UPS Worldwide Express Plus 54 54
+CA INTL
+Description Shipping Rating
+UPS Express Early 54 54
+
+
+CA CA
+Description Service Code
+UPS Expedited 19
+UPS Express 24
+UPS Express Early 23
+UPS Express Saver 20
+UPS Standard 25
+
+CA US
+Description Service Code
+UPS 3 Day Select 33
+UPS Express Early 21
+UPS Express Saver 28
+UPS Standard 03
+UPS Worldwide Expedited 05
+UPS Worldwide Express 01
+
+CA INTL
+Description Service Code
+UPS Express Saver 28
+UPS Standard 03
+UPS Worldwide Expedited 05
+UPS Worldwide Express 01
+UPS Worldwide Express Plus 21
+
+
+
+US US
+Description Service Code
+UPS 2nd Day Air 2DA
+UPS 2nd Day Air (Saturday Delivery) 2DAS
+UPS 2nd Day Air A.M. 2DM
+UPS 3 Day Select 3DS
+UPS Ground GND
+UPS Next Day Air 1DA
+UPS Next Day Air (Saturday Delivery) 1DAS
+UPS Next Day Air Early 1DM
+UPS Next Day Air Early (Saturday Delivery) 1DMS
+UPS Next Day Air Saver 1DP
+
+US INTL
+Description Service Code
+UPS Standard 03
+UPS Worldwide Expedited 05
+UPS Worldwide Express 01
+UPS Worldwide Express Plus 21
+UPS Worldwide Saver 28
+

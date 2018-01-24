@@ -1,0 +1,26 @@
+#!/bin/bash
+
+HOST=$1
+route=${2:-/api}
+
+shift
+shift
+
+echo RUNNING
+echo $HOST $route
+
+x=`mktemp`
+
+trap "echo -e '\\n\\nEXITING\\n'; rm -f ${x}" EXIT
+trap "echo UNEXPECTED ERROR; rm ${x}; exit " ERR
+
+sess='mock1'
+
+http --check-status --session=$sess -f POST $HOST:8080/api/login username=admin password="${FREIGHTCOM_admin}"
+
+http --check-status --session=$sess -f POST $HOST:8080/api/set-session-role/1
+
+http --check-status -pbh --session=$sess --json -f PUT "http://${HOST}:8080${route}" "$@"
+
+
+

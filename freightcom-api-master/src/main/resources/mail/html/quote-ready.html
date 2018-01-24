@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:remove="all">Quote Ready</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <p th:text="${name}">
+      Dear Sir
+    </p>
+    <p>
+      A new quote #<span th:text="${orderId}">xxx</span> has been created for a total of <span th:text="${orderCurrency}">$</span> <span th:text="${orderTotal}">$</span>.
+    </p>
+    <p>
+      To view this quote, click the following link:
+      <br/>
+      <a th:href="@{${link}}">Order #<span th:text="${orderId}">xxx</span></a>
+    </p>
+    <p>
+      Thank you for your business <br />
+    </p>
+    <p>
+      FREIGHTCOM.COM
+    </p>
+  </body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "name": "datasource.old",
+      "type": "javax.sql.DataSource",
+      "sourceType": "com.freightcom.migration.Datasources",
+      "sourceMethod": "sourceDataSource()"
+    },
+    {
+      "name": "datasource.q",
+      "type": "javax.sql.DataSource",
+      "sourceType": "com.freightcom.migration.Datasources",
+      "sourceMethod": "secondaryDataSource()"
+    }
+  ],
+  "properties": [],
+  "hints": []
+}

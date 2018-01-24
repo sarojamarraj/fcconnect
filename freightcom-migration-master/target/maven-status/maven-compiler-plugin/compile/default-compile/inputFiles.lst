@@ -1,0 +1,8 @@
+/media/sf_shared/spring-projects/freightcom-migration/src/main/java/com/freightcom/migration/MigrationService.java
+/media/sf_shared/spring-projects/freightcom-migration/src/main/java/com/freightcom/migration/Mapper.java
+/media/sf_shared/spring-projects/freightcom-migration/src/main/java/com/freightcom/migration/Application.java
+/media/sf_shared/spring-projects/freightcom-migration/src/main/java/com/freightcom/migration/FieldSpecification.java
+/media/sf_shared/spring-projects/freightcom-migration/src/main/java/com/freightcom/migration/TableMap.java
+/media/sf_shared/spring-projects/freightcom-migration/src/main/java/com/freightcom/migration/KeyDropper.java
+/media/sf_shared/spring-projects/freightcom-migration/src/main/java/com/freightcom/migration/AppRunner.java
+/media/sf_shared/spring-projects/freightcom-migration/src/main/java/com/freightcom/migration/Datasources.java

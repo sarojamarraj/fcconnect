@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <title th:remove="all">New Invoice</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <p th:text="${name}">
+      Dear Sir
+    </p>
+    <p>
+      Thank you, we have received payment for invoice #<span th:text="${invoiceId}">xxx</span>. The total balance remaining is now <span th:text="${invoiceCurrency}">$</span> <span th:text="${invoiceRemaining}">$</span>.
+    </p>
+    <p>
+      To view this invoice and receipt, click the following link:
+      <br/>
+      <a th:href="@{${link}}">Invoice #<span th:text="${invoiceId}">xxx</span></a>
+    </p>
+    <p>
+      Thank you for your business <br />
+    </p>
+    <p>
+      FREIGHTCOM.COM
+    </p>
+  </body>
+</html>

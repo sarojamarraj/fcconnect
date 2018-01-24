@@ -1,0 +1,115 @@
+#!/bin/bash
+
+base=`basename "${0}"`
+dir=`dirname "${0}"`
+
+if [ $# -lt 1 ]; then
+  echo "usage: $base host"
+  exit
+fi
+
+
+HOST=$1
+
+shift
+shift
+
+echo RUNNING TEST SESSION
+echo $HOST
+
+x=`mktemp`
+
+trap "echo -e '\\n\\nEXITING\\n'; rm -f ${x}" EXIT
+trap "echo UNEXPECTED ERROR; rm ${x}; exit " ERR
+
+http --check-status -pb  --json -f POST $HOST:8080/api/user/resetPasswordByEmail email=bryan.m.kramer@gmail.com
+
+
+sess="A`openssl rand -base64 12 | tr -d '=/+@%'`"
+
+http --check-status --session=$sess -f POST $HOST:8080/api/login username=admin password="${FREIGHTCOM_admin}" > $x
+
+http --check-status --session=$sess -f POST $HOST:8080/api/set-session-role/1 >> $x
+
+route=/api/customer-staff/4478
+http --check-status -pb --session=$sess --json -f GET "http://${HOST}:8080${route}" | php $dir/json_extract.php 'authorities.0.customerName'
+
+route=/api/user/1
+http --check-status -pb --session=$sess --json -f GET "http://${HOST}:8080${route}" | php $dir/json_extract.php 'authorities.0.roleName'
+
+route='/api/customer-staff?customer_id=4112'
+http --check-status -pb --session=$sess --json -f GET "http://${HOST}:8080${route}" | php $dir/json_extract.php '_embedded.user.0.authorities.0.roleName'
+
+route='/api/logged-in-user'
+http --check-status -pb --session=$sess --json -f GET "http://${HOST}:8080${route}" | php $dir/json_extract.php 'login'
+
+route='/api/customer-staff/4478'
+http --check-status -pb --session=$sess --json -f GET "http://${HOST}:8080${route}" | php $dir/json_extract.php 'login'
+
+route='/api/user'
+http --check-status -pb --session=$sess --json -f POST "http://${HOST}:8080${route}" login='some user' | php $dir/json_extract.php 'login'
+
+route='/api/user/search/findByLogin'
+http --check-status -pb --session=$sess --json -f GET "http://${HOST}:8080${route}" name=='some user' | php $dir/json_extract.php '_embedded.user.0.id'
+
+route='/api/user/search/findByLogin'
+id=`http --check-status -pb --session=$sess --json -f GET "http://${HOST}:8080${route}" name=='some user'| php $dir/json_extract.php '_embedded.user.0.id'`
+
+route="/api/user/$id"
+http --check-status -pb --session=$sess --json -f PUT "http://${HOST}:8080${route}" firstname=test1 lastname=test2 | php $dir/json_extract.php 'firstname'
+
+route="/api/user/$id"
+http --check-status -pb --session=$sess --json -f GET "http://${HOST}:8080${route}" | php $dir/json_extract.php 'lastname'
+
+route="/api/user/update/$id"
+http --check-status -pb --session=$sess --json -f PUT "http://${HOST}:8080${route}" firstname=test1 lastname=test332 | php $dir/json_extract.php 'firstname'
+
+route="/api/user/$id"
+http --check-status -pb --session=$sess --json -f GET "http://${HOST}:8080${route}" | php $dir/json_extract.php 'lastname'
+
+route="/api/user/$id"
+http --check-status -pb --session=$sess --json -f DELETE "http://${HOST}:8080${route}"
+
+
+#
+# Add and delete a customer admin
+#
+
+
+
+route='/api/user/customer_admin/4478'
+http --check-status -pb --session=$sess --json -f POST "http://${HOST}:8080${route}" login='new.customer.admin' | php $dir/json_extract.php 'login'
+
+route='/api/user/search/findByLogin'
+http --check-status -pb --session=$sess --json -f GET "http://${HOST}:8080${route}" name=='new.customer.admin' | php $dir/json_extract.php '_embedded.user.0.authorities.0.roleName'
+
+route='/api/user/search/findByLogin'
+id=`http --check-status -pb --session=$sess --json -f GET "http://${HOST}:8080${route}" name=='new.customer.admin'| php $dir/json_extract.php '_embedded.user.0.id'`
+
+echo GET AUTH ID
+http --check-status -pb --session=$sess --json -f GET "http://${HOST}:8080${route}"
+
+auth_id=`http --check-status -pb --session=$sess --json -f GET "http://${HOST}:8080${route}" name=='new.customer.admin'| php $dir/json_extract.php '_embedded.user.0.authorities.0.id'`
+
+echo AUTH ID $auth_id
+
+route="/api/user/$id"
+http --check-status -pb --session=$sess --json -f PUT "http://${HOST}:8080${route}" firstname=test1 lastname=test2 | php $dir/json_extract.php 'firstname'
+
+route="/api/user/$id"
+http --check-status -pb --session=$sess --json -f DELETE "http://${HOST}:8080${route}"
+
+route="/api/user/role/$auth_id"
+http --check-status -pb --session=$sess --json -f DELETE "http://${HOST}:8080${route}"
+
+#
+# Logout
+#
+
+route="/api/logout"
+http --check-status -pb --session=$sess --json -f POST "http://${HOST}:8080${route}"
+
+
+
+
+

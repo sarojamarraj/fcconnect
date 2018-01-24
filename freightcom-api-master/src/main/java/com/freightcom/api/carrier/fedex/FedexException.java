@@ -1,0 +1,37 @@
+package com.freightcom.api.carrier.fedex;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class FedexException extends Exception {
+
+	/**
+     *
+     */
+    private static final long serialVersionUID = 1L;
+    List<String> errorMessages = new ArrayList<String>();
+
+
+	public FedexException() {
+		super();
+	}
+
+	public FedexException(String msg) {
+		super(msg);
+		errorMessages.add(msg);
+	}
+
+	/**
+	 * @return Returns the errorMessages.
+	 */
+	public List<String> getErrorMessages() {
+		return errorMessages;
+	}
+
+	/**
+	 * @param errorMessages The errorMessages to set.
+	 */
+	public void setErrorMessages(List<String> errorMessages) {
+		this.errorMessages = errorMessages;
+	}
+}

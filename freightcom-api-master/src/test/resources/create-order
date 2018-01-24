@@ -1,0 +1,26 @@
+#!/bin/bash
+
+HOST="$3"
+x=`mktemp`
+login=${1}
+
+trap "echo -e '\\n\\nEXITING\\n'; rm -f ${x}" EXIT
+trap "echo UNEXPECTED ERROR; rm ${x}; exit " ERR
+
+sess='create-order'
+
+http --check-status --session=$sess -f POST $HOST:8080/api/login username=admin password="${FREIGHTCOM_admin}"
+echo SSSS $?
+
+http --check-status --session=$sess -pb --json -f POST $HOST:8080/api/order customer_id=33 > $x
+
+link=`php json_extract.php $x '_links.customerOrder.href'`
+
+echo
+echo -e 'LINK IS' $link
+
+http --check-status --session=$sess -pb --json -f DELETE "${link}"
+
+echo -e '\n\nDEKETED\n'
+
+
